@@ -16,7 +16,8 @@ jobs:
         with:
           node-version: '18'
       
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       
@@ -33,3 +34,17 @@ jobs:
       #     OCO_MODEL: gpt-4o
       #     OCO_LANGUAGE: en
       #     OCO_PROMPT_MODULE: conventional-commit
+
+  docker:
+    needs: opencommit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
